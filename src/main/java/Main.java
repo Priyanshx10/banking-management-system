@@ -6,96 +6,113 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("================================");
-        System.out.println("     BANKING MANAGEMENT SYSTEM");
-        System.out.println("================================");
-
-        System.out.println("1. View Account Details");
-        System.out.println("2. Deposit Money");
-        System.out.println("3. Withdraw Money");
-        System.out.println("4. Exit");
-
-        System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-
         BankAccount account =
                 new BankAccount(101201, "Priyansh Yadav", 2000.0);
 
-        switch (choice) {
+        int choice = 0;
 
-            case 1:
+        while (choice != 4) {
 
-                System.out.println(
-                    "Account Number: " + account.getAccountNumber()
-                );
+            System.out.println("================================");
+            System.out.println("     BANKING MANAGEMENT SYSTEM");
+            System.out.println("================================");
 
-                System.out.println(
-                    "Account Holder Name: " +
-                    account.getAccountHolderName()
-                );
+            System.out.println("1. View Account Details");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Exit");
 
-                System.out.println(
-                    "Account Balance: " +
-                    account.getBalance()
-                );
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
 
-                break;
+            switch (choice) {
 
-            case 2:
+                case 1:
 
-                System.out.println(
-                    "You have selected Deposit Money."
-                );
+                    System.out.println("================================");
+                    System.out.println("         ACCOUNT DETAILS        ");
+                    System.out.println("================================");
 
-                System.out.print(
-                    "Enter the amount to deposit: "
-                );
+                    System.out.println(
+                        "Account Number: " +
+                        account.getAccountNumber()
+                    );
 
-                double depositAmount = scanner.nextDouble();
+                    System.out.println(
+                        "Account Holder Name: " +
+                        account.getAccountHolderName()
+                    );
 
-                account.deposit(depositAmount);
+                    System.out.println(
+                        "Account Balance: " +
+                        account.getBalance()
+                    );
 
-                System.out.println(
-                    "Current Balance: " +
-                    account.getBalance()
-                );
+                    System.out.println("================================");
 
-                break;
+                    break;
 
-            case 3:
+                case 2:
 
-                System.out.println(
-                    "You have selected Withdraw Money."
-                );
+                    System.out.println(
+                        "You have selected Deposit Money."
+                    );
 
-                System.out.print(
-                    "Enter the amount to withdraw: "
-                );
+                    System.out.print(
+                        "Enter the amount to deposit: "
+                    );
 
-                double withdrawAmount = scanner.nextDouble();
+                    double depositAmount = scanner.nextDouble();
 
-                account.withdraw(withdrawAmount);
+                    account.deposit(depositAmount);
 
-                System.out.println(
-                    "Current Balance: " +
-                    account.getBalance()
-                );
+                    System.out.println(
+                        "Current Balance: " +
+                        account.getBalance()
+                    );
 
-                break;
+                    break;
 
-            case 4:
+                case 3:
 
-                System.out.println(
-                    "You have selected Exit."
-                );
+                    System.out.println(
+                        "You have selected Withdraw Money."
+                    );
 
-                break;
+                    System.out.print(
+                        "Enter the amount to withdraw: "
+                    );
 
-            default:
+                    double withdrawAmount = scanner.nextDouble();
 
-                System.out.println(
-                    "Invalid choice."
-                );
+                    account.withdraw(withdrawAmount);
+
+                    System.out.println(
+                        "Current Balance: " +
+                        account.getBalance()
+                    );
+
+                    break;
+
+                case 4:
+
+                    System.out.println("================================");
+                    System.out.println(
+                        "Thank you for using the Banking Management System."
+                    );
+                    System.out.println("Goodbye!");
+                    System.out.println("================================");
+
+                    break;
+
+                default:
+
+                    System.out.println(
+                        "Invalid choice. Please try again."
+                    );
+            }
+
+            System.out.println();
         }
 
         scanner.close();
