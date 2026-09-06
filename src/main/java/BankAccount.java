@@ -8,4 +8,17 @@ public class BankAccount {
         this.accountHolderName = accountHolderName;
         this.balance = balance;
     }   
+
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+    
 }
