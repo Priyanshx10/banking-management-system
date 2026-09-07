@@ -1,13 +1,36 @@
-public class BankAccount {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-    private int accountNumber;
-    private Customer customer;
+public abstract class BankAccount {
+    private static int nextAccountNumber = 100001;
+
+    private final int accountNumber;
+    private final Customer customer;
     private double balance;
+    private final List<Transaction> transactions = new ArrayList<>();
 
-    public BankAccount(int accountNumber, Customer customer, double balance) {
-        this.accountNumber = accountNumber;
+    protected BankAccount(Customer customer, double initialBalance) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer is required.");
+        }
+        if (initialBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Initial balance cannot be negative.");
+        }
+
+        this.accountNumber = nextAccountNumber++;
         this.customer = customer;
-        this.balance = balance;
+        this.balance = initialBalance;
+
+        if (initialBalance > 0) {
+            transactions.add(new Transaction(
+                    "OPENING_DEPOSIT",
+                    initialBalance,
+                    accountNumber,
+                    null,
+                    "Initial account balance"));
+        }
     }
 
     public int getAccountNumber() {
@@ -23,33 +46,79 @@ public class BankAccount {
     }
 
     public void deposit(double amount) {
+        deposit(amount, null, "Cash deposit");
+    }
 
-        if (amount > 0) {
-            balance += amount;
-        } else {
-            System.out.println(
-                "Deposit amount should be greater than 0."
-            );
-        }
+    protected void deposit(
+            double amount,
+            Integer relatedAccountNumber,
+            String description) {
+
+        validatePositiveAmount(amount);
+        balance += amount;
+
+        transactions.add(new Transaction(
+                "DEPOSIT",
+                amount,
+                accountNumber,
+                relatedAccountNumber,
+                description));
     }
 
     public void withdraw(double amount) {
+        withdraw(amount, null, "Cash withdrawal");
+    }
 
-        if (amount <= 0) {
+    protected void withdraw(
+            double amount,
+            Integer relatedAccountNumber,
+            String description) {
 
-            System.out.println(
-                "Withdrawal amount should be greater than 0."
-            );
+        validatePositiveAmount(amount);
 
-        } else if (amount > balance) {
-
-            System.out.println(
-                "Insufficient balance."
-            );
-
-        } else {
-
-            balance -= amount;
+        if (amount > balance) {
+            throw new BankingException("Insufficient balance.");
         }
+
+        balance -= amount;
+
+        transactions.add(new Transaction(
+                "WITHDRAWAL",
+                amount,
+                accountNumber,
+                relatedAccountNumber,
+                description));
+    }
+
+    protected void addInterestTransaction(
+            double amount,
+            String description) {
+
+        validatePositiveAmount(amount);
+        balance += amount;
+
+        transactions.add(new Transaction(
+                "INTEREST",
+                amount,
+                accountNumber,
+                null,
+                description));
+    }
+
+    private void validatePositiveAmount(double amount) {
+        if (amount <= 0) {
+            throw new BankingException(
+                    "Amount must be greater than 0.");
+        }
+    }
+
+    public List<Transaction> getTransactions() {
+        return Collections.unmodifiableList(transactions);
+    }
+
+    public abstract String getAccountType();
+
+    public double calculateInterest() {
+        return 0.0;
     }
 }
