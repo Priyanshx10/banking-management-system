@@ -1,12 +1,12 @@
 public class BankAccount {
 
     private int accountNumber;
-    private String accountHolderName;
+    private Customer customer;
     private double balance;
 
-    public BankAccount(int accountNumber, String accountHolderName, double balance) {
+    public BankAccount(int accountNumber, Customer customer, double balance) {
         this.accountNumber = accountNumber;
-        this.accountHolderName = accountHolderName;
+        this.customer = customer;
         this.balance = balance;
     }
 
@@ -14,8 +14,8 @@ public class BankAccount {
         return accountNumber;
     }
 
-    public String getAccountHolderName() {
-        return accountHolderName;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public double getBalance() {

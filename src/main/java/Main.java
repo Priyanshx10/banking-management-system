@@ -6,8 +6,19 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        Customer customer =
+                new Customer(
+                    1,
+                    "Priyansh Yadav",
+                    "priyansh@example.com"
+                );
+
         BankAccount account =
-                new BankAccount(101201, "Priyansh Yadav", 2000.0);
+                new BankAccount(
+                    101201,
+                    customer,
+                    2000.0
+                );
 
         int choice = 0;
 
@@ -34,13 +45,18 @@ public class Main {
                     System.out.println("================================");
 
                     System.out.println(
+                        "Customer ID: " +
+                        account.getCustomer().getCustomerId()
+                    );
+
+                    System.out.println(
                         "Account Number: " +
                         account.getAccountNumber()
                     );
 
                     System.out.println(
                         "Account Holder Name: " +
-                        account.getAccountHolderName()
+                        account.getCustomer().getName()
                     );
 
                     System.out.println(
